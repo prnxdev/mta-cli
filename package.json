@@ -1,0 +1,20 @@
+{
+  "name": "mtaxe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "mtaxe": "./bin/index.js"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "chokidar": "^3.3.1",
+    "commander": "^4.1.1"
+  }
+}
