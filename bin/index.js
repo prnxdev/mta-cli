@@ -8,6 +8,8 @@ const program = require('commander');
 const axios = require('axios');
 const consola = require('consola');
 const unzip = require('node-unzip-2');
+const xml2js = require('xml2js');
+const { exec } = require('child_process');
 
 program
 	.command('watch')
@@ -48,6 +50,37 @@ program
 			consola.info(`Resource created at ${resourceDirPath}`);	
 		} catch (error) {
 			consola.error(error.message);			
+		}
+	});
+
+program
+	.command('compile')
+	.action(async () => {
+		try {
+			let currentPath = process.cwd();
+			let metaPath = `${currentPath}/meta.xml`;
+			let outputString = '';
+			if (!fs.existsSync(metaPath)) throw Error('This is not resource folder. No meta.xml file found!');
+			let metaString = await fs.readFile(metaPath);
+			xml2js.parseString(metaString, async (err, result) => {
+				result.meta.script.map(script => {
+					script = script['$'];
+					consola.info(`Compiling ${script.src}...`);
+					exec(__dirname + `/luac_mta.exe -e3 -o "${currentPath}/dist/${script.src}c" "${currentPath}/${script.src}"`);
+					let compiledIndex = result.meta.script.map(e => e['$']).findIndex(e => e.src === `dist/${script.src}c`);
+					if (compiledIndex === -1) {
+						result.meta.script.push({'$': { src: `dist/${script.src}c`, type: script.type }});
+					}
+				});
+				outputString = result;
+			});
+
+			let builder = new xml2js.Builder();
+			let xml = builder.buildObject(outputString);
+			await fs.writeFile(metaPath, xml);
+			consola.info(`All compiled files were added to meta.xml file. Enjoy!`);
+		} catch (error) {
+			consola.error(error);
 		}
 	});
 

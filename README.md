@@ -23,10 +23,13 @@ After instalation and configuration you will get **mta** command in your CMD (no
 ## Commands
 
 ### mta watch
-Watches changes inside resource folder (must be used inside resource folder) and automatically restarts resource
+Watches changes inside resource folder (must be used inside resource folder) and automatically restarts resource (can be executed only in resource folder).
 
 ### mta create <resourceName>
 Creates resource folder with meta.xml and 2 .lua files fully configured.
+
+### mta compile
+Compiles all files from meta.xml to .luac files using luac_mta.exe and writes all compiled files into meta.xml (can be executed only in resource folder).
 
 ### mta settings
 It's just debug. Returns JSON content of settings.json
