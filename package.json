@@ -1,21 +1,26 @@
 {
   "name": "mtaxe",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./scripts/postinstall.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bin": {
-    "mtaxe": "./bin/index.js"
+    "mta": "./bin/index.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "chalk": "^3.0.0",
     "chokidar": "^3.3.1",
-    "commander": "^4.1.1"
+    "commander": "^4.1.1",
+    "consola": "^2.11.3",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.0.4",
+    "xml2js": "^0.4.23"
   }
 }

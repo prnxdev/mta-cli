@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const process = require('process');
 const chokidar = require('chokidar');
 const program = require('commander');
 const axios = require('axios');
+const consola = require('consola');
 
 program
 	.command('watch')
@@ -17,18 +18,25 @@ program
 		};
 
 		if (!fs.existsSync('./meta.xml')) throw Error('This is not resource folder. No meta.xml file found!');
-		console.log(`Watching changes for "${resourceName}" resource.`);
+		consola.info(`Watching changes for "${resourceName}" resource.`);
 
 		chokidar
 			.watch('.', options)
 			.on('all', async (event, path) => {
 				try {
-					console.log(`Restarting "${resourceName}"`);
+					consola.info(`Restarting "${resourceName}"`);
 					await axios.post('http://127.0.0.1:22005/resource-restart/call/restart', [resourceName]);
 				} catch (error) {
-					console.error(error.message);			
+					consola.error(error.message);			
 				}
 			});
+	});
+
+program
+	.command('settings')
+	.action(async (value) => {
+		let settings = await fs.readFile('./settings.json');
+		consola.info(JSON.parse(settings));
 	});
 
 program.parse(process.argv)
