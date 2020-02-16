@@ -1,6 +1,6 @@
 {
   "name": "mta-cli",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "CLI for Multi Theft Auto modification",
   "repository": {
     "type": "git",
@@ -11,7 +11,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./scripts/postinstall.js"
   },
-  "keywords": ["cli", "mtasa"],
+  "keywords": [
+    "cli",
+    "mtasa"
+  ],
   "author": "Paweł Miczka <piorunx@gmail.com>",
   "license": "ISC",
   "bin": {
@@ -25,6 +28,7 @@
     "consola": "^2.11.3",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.4",
+    "node-unzip-2": "^0.2.8",
     "xml2js": "^0.4.23"
   }
 }

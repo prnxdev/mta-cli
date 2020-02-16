@@ -25,5 +25,8 @@ After instalation and configuration you will get **mta** command in your CMD (no
 ### mta watch
 Watches changes inside resource folder (must be used inside resource folder) and automatically restarts resource
 
+### mta create <resourceName>
+Creates resource folder with meta.xml and 2 .lua files fully configured.
+
 ### mta settings
 It's just debug. Returns JSON content of settings.json

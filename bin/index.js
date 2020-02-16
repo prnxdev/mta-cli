@@ -7,6 +7,7 @@ const chokidar = require('chokidar');
 const program = require('commander');
 const axios = require('axios');
 const consola = require('consola');
+const unzip = require('node-unzip-2');
 
 program
 	.command('watch')
@@ -30,6 +31,24 @@ program
 					consola.error(error.message);			
 				}
 			});
+	});
+
+program
+	.command('create <resourceName>')
+	.action(async (resourceName) => {
+		try {
+			let currentPath = process.cwd();
+			let resourceDirPath = `${currentPath}/${resourceName}`;
+			if (fs.existsSync(resourceDirPath)) throw new Error(`Folder with name "${resourceName}" exists in current directory. Choose different name.`);
+			consola.info(`Creating ${resourceName} resource...`);
+			await fs.copyFile(__dirname + '/../resources/example-resource.zip', `${resourceDirPath}.zip`);
+			fs.createReadStream(`${resourceDirPath}.zip`)
+				.pipe(unzip.Extract({ path: resourceDirPath }));
+			fs.remove(`${resourceDirPath}.zip`);
+			consola.info(`Resource created at ${resourceDirPath}`);	
+		} catch (error) {
+			consola.error(error.message);			
+		}
 	});
 
 program
